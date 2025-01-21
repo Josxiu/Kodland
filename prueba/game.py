@@ -34,7 +34,6 @@ def mostrar_tiempo():
     ventana.blit(score_surf,score_rect)
     return tiempo
 # puntaje
-puntaje = 0
 def mostrar_puntaje():
     puntaje_surf = fuente_texto.render(f'Puntaje: {puntaje}',False,(64,64,64))
     puntaje_rect = puntaje_surf.get_rect(topleft = (10,30))
@@ -56,6 +55,7 @@ def mover_jugador():
 def disparar(balas):
     bala = bala_sprite.get_rect(center = (jugador.centerx, jugador.y))
     balas.append(bala)
+    sonido_bala.play()
     return balas
 
 def mover_bala(bala):
@@ -113,6 +113,7 @@ def destruir_enemigo(enemigos, balas):
             if bala.colliderect(enemigo):
                 impacto = True
                 enemigos.remove(enemigo)
+                explosion_ovni.play()
                 puntaje += 2
         if impacto:
             balas.remove(bala)
@@ -127,6 +128,7 @@ def disparar_enemigo(enemigos, lasers,lasers_jefe, tiempo_disparo = 1000):
                 laser = disparo_enemigo.get_rect(center = (enemigo.centerx, enemigo.bottom))
                 lasers.append(laser)
                 ventana.blit(disparo_enemigo, laser)
+                sonido_laser.play()
 
         inicio_disparo = pygame.time.get_ticks()
     return lasers, lasers_jefe
@@ -171,6 +173,7 @@ def disparar_jefe(lasers_jefe, tiempo_disparo = 800):
         lasers_jefe.append(laser)
         ventana.blit(disparo_jefe, laser)
         inicio_disparo_jefe = pygame.time.get_ticks()
+        sonido_laser.play()
     return lasers_jefe
 
 def crear_meteoro(meteoros, tiempo_spawn = 2000):
@@ -205,6 +208,7 @@ def destruir_meteoro(meteoros, balas):
             if meteoro.collidepoint(bala.center):
                 impacto = True
                 meteoros.remove(meteoro)
+                exposion_asteroide.play()
                 if tipo == 1: puntaje += 1
                 else: puntaje += 2
         if impacto:
@@ -243,11 +247,11 @@ def creacion():
 # inicio del juego y configuraciones
 pygame.init() # inicializar pygame
 reloj = pygame.time.Clock() # reloj para controlar los fps
-inicio = 0
-tiempo_juego = 0
-jugar = False
-dificultad = 1
-
+inicio = 0 # Tiempo desde que se inicia el juego
+tiempo_juego = 0 # Tiempo transcurrido en el juego
+jugar = False # Variable para saber si se está jugando
+dificultad = 1 # Dificultad del juego
+puntaje = 0 # Puntaje del jugador
 
 # configuraciones de la ventana
 ANCHO = 800
@@ -259,7 +263,7 @@ pygame.display.set_caption("Proyecto kodland") # título de la ventana
 fondo = pygame.image.load("graficas/fondo.png")
 espacio = pygame.image.load("graficas/espacio.png")
 
-# Configuración del texto
+# Configuración del texto del menu
 fuente_texto = pygame.font.Font(None, 50) 
 msj_comenzar_sup = fuente_texto.render("Enter para jugar", False, "White")
 msj_comenzar_rect = msj_comenzar_sup.get_rect(center=(ANCHO//2, ALTO//2))
@@ -279,6 +283,7 @@ jugadorx2 = jugadorx2_sup.get_rect(center = (ANCHO/2,ALTO/3))
 # proyectiles
 bala_sprite = pygame.image.load("graficas/bala.png").convert_alpha()
 bala_sprite = pygame.transform.rotozoom(bala_sprite,0,2)
+sonido_bala = pygame.mixer.Sound("Sonidos\disparo_jugador.wav")
 balas = []
 
 
@@ -290,6 +295,8 @@ jefe_rect = jefe_sprite.get_rect(center = (ANCHO/2,100))
 disparo_enemigo = pygame.image.load("graficas\laser.png").convert_alpha()
 disparo_enemigo = pygame.transform.rotozoom(disparo_enemigo,0,1)
 disparo_jefe = pygame.transform.rotozoom(disparo_enemigo,0,2)
+sonido_laser = pygame.mixer.Sound("Sonidos\disparo_ovni.wav")
+explosion_ovni = pygame.mixer.Sound("Sonidos\explosion_ovni.wav")
 enemigos = []
 lasers = []
 lasers_jefe = []
@@ -305,7 +312,8 @@ vel_jefe = 6
 meteoro1_sprite = pygame.image.load("graficas\meteoro.png").convert_alpha()
 meteoro1_sprite = pygame.transform.rotozoom(meteoro1_sprite,0,1.2)
 meteoro2_sprite = pygame.image.load("graficas\meteoro2.png").convert_alpha()
-meteoro2_sprite = pygame.transform.rotozoom(meteoro2_sprite,0,1.2) 
+meteoro2_sprite = pygame.transform.rotozoom(meteoro2_sprite,0,1.2)
+exposion_asteroide = pygame.mixer.Sound("Sonidos\explosion_asteroide.wav")
 meteoros = []
 inicio_spawn = 0
 tipo = 1
@@ -323,7 +331,7 @@ while True:
                 print("espacio")
                 disparar(balas)
 
-        else:
+        else: # Al presionar enter se reinicia el juego
             if evento.type == pygame.KEYDOWN and (evento.key == pygame.K_KP_ENTER or evento.key == pygame.K_RETURN):
                 reiniciar()
 

@@ -256,8 +256,8 @@ ventana = pygame.display.set_mode((ANCHO, ALTO)) # crear ventana
 pygame.display.set_caption("Proyecto kodland") # título de la ventana
 
 #fondo
-fondo = pygame.image.load("prueba/graficas/fondo.png")
-espacio = pygame.image.load("prueba/graficas/espacio.png")
+fondo = pygame.image.load("graficas/fondo.png")
+espacio = pygame.image.load("graficas/espacio.png")
 
 # Configuración del texto
 fuente_texto = pygame.font.Font(None, 50) 
@@ -270,24 +270,24 @@ msj_interfaz2_rect = msj_fin.get_rect(center=(ANCHO//2, 100))
 
 # Jugador
 VEL_JUG = 5
-jugador_sup = pygame.image.load("prueba/graficas/nave.png").convert_alpha()
+jugador_sup = pygame.image.load("graficas/nave.png").convert_alpha()
 jugador = jugador_sup.get_rect(center = (ANCHO/2,ALTO-50))
 
 jugadorx2_sup = pygame.transform.rotozoom(jugador_sup,0,2)
 jugadorx2 = jugadorx2_sup.get_rect(center = (ANCHO/2,ALTO/3))
 
 # proyectiles
-bala_sprite = pygame.image.load("prueba/graficas/bala.png").convert_alpha()
+bala_sprite = pygame.image.load("graficas/bala.png").convert_alpha()
 bala_sprite = pygame.transform.rotozoom(bala_sprite,0,2)
 balas = []
 
 
 # Enemigos
-enemigo_sprite = (pygame.image.load("prueba\graficas\ovni.png").convert_alpha())
+enemigo_sprite = (pygame.image.load("graficas\ovni.png").convert_alpha())
 enemigo_sprite = pygame.transform.rotozoom(enemigo_sprite,0,2)
 jefe_sprite = pygame.transform.rotozoom(enemigo_sprite,0,3)
 jefe_rect = jefe_sprite.get_rect(center = (ANCHO/2,100))
-disparo_enemigo = pygame.image.load("prueba\graficas\laser.png").convert_alpha()
+disparo_enemigo = pygame.image.load("graficas\laser.png").convert_alpha()
 disparo_enemigo = pygame.transform.rotozoom(disparo_enemigo,0,1)
 disparo_jefe = pygame.transform.rotozoom(disparo_enemigo,0,2)
 enemigos = []
@@ -302,9 +302,9 @@ vida_jefe = 10
 vel_jefe = 6
 
 # meteoros
-meteoro1_sprite = pygame.image.load("prueba\graficas\meteoro.png").convert_alpha()
+meteoro1_sprite = pygame.image.load("graficas\meteoro.png").convert_alpha()
 meteoro1_sprite = pygame.transform.rotozoom(meteoro1_sprite,0,1.2)
-meteoro2_sprite = pygame.image.load("prueba\graficas\meteoro2.png").convert_alpha()
+meteoro2_sprite = pygame.image.load("graficas\meteoro2.png").convert_alpha()
 meteoro2_sprite = pygame.transform.rotozoom(meteoro2_sprite,0,1.2) 
 meteoros = []
 inicio_spawn = 0

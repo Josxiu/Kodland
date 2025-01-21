@@ -1,4 +1,5 @@
 # Kodland
+Realizado por Juan José Vásquez Urrutia
 Proyecto de kodland para la prueba de python
 
 En el archivo game se encuentran todas las funciones y variables que se necesitan para correr el juego
